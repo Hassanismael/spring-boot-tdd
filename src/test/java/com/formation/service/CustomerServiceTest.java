@@ -22,8 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.junit.jupiter.api.Tag;
 
 @ExtendWith(MockitoExtension.class) // 1 : Ajoute MockitoExtension
+@Tag("unitaires")
 public class CustomerServiceTest {
 
   @InjectMocks // 2 : Injecte les mocks dans le service à tester (CustomerService)
