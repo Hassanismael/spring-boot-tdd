@@ -36,7 +36,7 @@ jacoco execPattern: 'target/jacoco.exec'
 }
 stage('Docker Build and Push') {
 steps {
-withDockerRegistry([credentialsId: "docker-hub", url: ""]) {
+withDockerRegistry([credentialsId: "ha-docker-hub", url: ""]) {
 sh 'printenv'
 sh 'docker build -t $registry:$BUILD_NUMBER .'
 sh 'docker push $registry:$BUILD_NUMBER'
