@@ -16,7 +16,7 @@ spec:
         app: devsecops
     spec:
       containers:
-      - image: replace
+      - image: hadegoke/demo-devsecops:9
         name: devsecops-container
 ---
 apiVersion: v1
