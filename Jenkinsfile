@@ -24,7 +24,6 @@ stage('Build Artifact') {
     }
 }
 stage('Unit Tests - JUnit and Jacoco') {
-when { expression { false } }
 steps {
 sh "mvn test"
 }
@@ -36,7 +35,6 @@ jacoco execPattern: 'target/jacoco.exec'
 }
 }
 stage('Docker Build and Push') {
-when { expression { false } }
 steps {
 withDockerRegistry([credentialsId: "ha-docker-hub", url: ""]) {
 sh 'printenv'
@@ -46,7 +44,6 @@ sh 'docker push $registry:$BUILD_NUMBER'
 }
 }
 stage('Remove Unused docker image') {
-when { expression { false } }
 steps{
 sh "docker rmi $registry:$BUILD_NUMBER"
 }
