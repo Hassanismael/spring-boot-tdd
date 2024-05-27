@@ -69,6 +69,32 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- PITest Mutation Plugin -->
+			<plugin>
+				<groupId>org.pitest</groupId>
+				<artifactId>pitest-maven</artifactId>
+				<version>1.7.4</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.pitest</groupId>
+						<artifactId>pitest-junit5-plugin</artifactId>
+						<version>0.16</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<targetClasses>
+						<param>com.formation.*</param>
+					</targetClasses>
+					<targetTests>
+						<param>com.formation.service.*</param>
+					</targetTests>
+					<mutationThreshold>70</mutationThreshold>
+					<outputFormats>
+						<outputFormat>XML</outputFormat>
+						<outputFormat>HTML</outputFormat>
+					</outputFormats>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
