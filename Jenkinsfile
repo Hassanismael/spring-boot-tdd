@@ -23,7 +23,7 @@ stage('Build Artifact') {
     archive 'target/*.jar' //so that they can be downloaded later
     }
 }
-stage('Unit Tests - JUnit and Jacoco') {
+stage('Unit Tests - JUnit and Jacoco v1') {
 steps {
 sh "mvn test"
 }
@@ -56,5 +56,30 @@ stage('Kubernetes Deployment - DEV') {
  }
  }
 }
+stage('Unit Tests - JUnit and Jacoco') {
+
+ steps {
+ sh "mvn test -Dgroups=unitaires"
+ }
+ post {
+ always {
+ junit 'target/surefire-reports/*.xml'
+ jacoco execPattern: 'target/jacoco.exec'
+ }
+ }
+}
+
+stage('Service - IntegrationTest') {
+ steps{
+ sh "mvn test -Dgroups=integrations"
+ }
+ }
+
+ stage('Web - IntegrationTest') {
+  steps{
+  sh "mvn test -Dgroups=web"
+  }
+ }
+
 }
 }
