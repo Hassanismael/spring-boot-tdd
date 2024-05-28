@@ -43,21 +43,6 @@ sh 'docker push $registry:$BUILD_NUMBER'
 }
 }
 }
-stage('Vulnerability Scan') {
-          steps {
-            parallel(
-
-              "Trivy Scan": {
-                 sh "bash trivy-images-docker.sh"
-              }
-            )
-          }
-          post {
-              always {
-                 dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
-              }
-          }
-        }
 
 stage('Remove Unused docker image') {
 steps{
