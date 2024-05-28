@@ -25,7 +25,7 @@ stage('Build Artifact') {
 }
 stage('Unit Tests - JUnit and Jacoco v1') {
 steps {
-sh "mvn clean"
+sh "mvn test"
 }
 post {
 always {
