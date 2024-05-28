@@ -34,44 +34,7 @@ jacoco execPattern: 'target/jacoco.exec'
 }
 }
 }
-stage('Docker Build and Push') {
-steps {
-withDockerRegistry([credentialsId: "ha-docker-hub", url: ""]) {
-sh 'printenv'
-sh 'docker build -t $registry:$BUILD_NUMBER .'
-sh 'docker push $registry:$BUILD_NUMBER'
-}
-}
-}
-stage('Vulnerability Scan') {
-          steps {
-            parallel(
 
-              "Trivy Scan": {
-                 sh "bash trivy-images-docker.sh"
-              }
-            )
-          }
-          post {
-              always {
-                 dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
-              }
-          }
-        }
-
-stage('Remove Unused docker image') {
-steps{
-sh "docker rmi $registry:$BUILD_NUMBER"
-}
-}
-stage('Kubernetes Deployment - DEV') {
- steps {
- withKubeConfig([credentialsId: 'kubernetes-config']) {
- sh "sed -i 's#replace#${registry}:${BUILD_NUMBER}#g' k8s_deployment_service.yaml"
- sh "kubectl apply -f k8s_deployment_service.yaml"
- }
- }
-}
 stage('Unit Tests - JUnit and Jacoco') {
 
  steps {
